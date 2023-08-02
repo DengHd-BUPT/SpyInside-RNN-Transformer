@@ -11,13 +11,11 @@ def softmax_derivative(x):
     s = softmax(x)
     return s * (1 - s)
 
-
 def f(x, y, tanh):
     if tanh:
         return np.tanh(y) / (1 + np.exp(-x))
     else:
         return y * np.softmax(x)
-
 
 def ibp_bounds(lx, ux, ly, uy, tanh=True):
     # Calculates bounds of [lx,ux] X [ly,uy].
@@ -184,42 +182,6 @@ def get_UB_delta(Au, Bu, Cu, lx, ux, ly, uy, tanh):
     delta = np.min(Au * bndX + Bu * bndY + Cu - f(bndX, bndY, tanh))
     return delta
 
-
-# def LB(lx, ux, ly, uy, tanh=True, n_samples=100):
-#     # Calculate Al, Bl, Cl by sampling and linear programming.
-#     bndX = np.array([lx, lx, ux, ux])
-#     bndY = np.array([ly, uy, ly, uy])
-#     X = np.concatenate([bndX, np.random.uniform(lx, ux, n_samples - 4)])
-#     Y = np.concatenate([bndY, np.random.uniform(ly, uy, n_samples - 4)])
-#
-#     model = Model()
-#     model.setParam("OutputFlag", 0)
-#
-#     Al = model.addVar(lb=-GRB.INFINITY, ub=GRB.INFINITY, name="Al")
-#     Bl = model.addVar(lb=-GRB.INFINITY, ub=GRB.INFINITY, name="Bl")
-#     Cl = model.addVar(lb=-GRB.INFINITY, ub=GRB.INFINITY, name="Cl")
-#
-#     model.addConstrs(
-#         (Al * X[i] + Bl * Y[i] + Cl <= f(X[i], Y[i], tanh) for i in range(n_samples)),
-#         name="ctr",
-#     )
-#
-#     obj = LinExpr()
-#     obj = np.sum(f(X, Y, tanh)) - Al * np.sum(X) - Bl * np.sum(Y) - Cl * n_samples
-#     model.setObjective(obj, GRB.MINIMIZE)
-#
-#     model.optimize()
-#
-#     statusop = 0
-#     if model.status == GRB.Status.OPTIMAL:
-#         statusop = 1
-#         Al, Bl, Cl = model.getAttr("x", model.getVars())
-#         delta = get_LB_delta(Al, Bl, Cl, lx, ux, ly, uy, tanh)
-#         Cl += delta
-#         return Al, Bl, Cl
-#     else:
-#         return None, None, None
-
 def gelu_new(x, y):
     # return 0.5 * x * (1.0 + torch.tanh(math.sqrt(2.0 / math.pi) * (x + 0.044715 * torch.pow(x, 3.0))))
     return 0.5 * x * (1.0 + math.tanh(y))
@@ -314,40 +276,6 @@ def UB(lx, ux, ly, uy, n_samples=100):
         return Au, Bu, Cu, max, uerror
     else:
         return None, None, None
-
-# def UB(lx, ux, ly, uy, tanh=True, n_samples=100):
-#     # Calculate Au, Bu, Cu by sampling and linear programming.
-#     bndX = np.array([lx, lx, ux, ux])
-#     bndY = np.array([ly, uy, ly, uy])
-#     X = np.concatenate([bndX, np.random.uniform(lx, ux, n_samples - 4)])
-#     Y = np.concatenate([bndY, np.random.uniform(ly, uy, n_samples - 4)])
-#
-#     model = Model()
-#     model.setParam("OutputFlag", 0)
-#
-#     Au = model.addVar(lb=-GRB.INFINITY, ub=GRB.INFINITY, name="Au")
-#     Bu = model.addVar(lb=-GRB.INFINITY, ub=GRB.INFINITY, name="Bu")
-#     Cu = model.addVar(lb=-GRB.INFINITY, ub=GRB.INFINITY, name="Cu")
-#
-#     model.addConstrs(
-#         (Au * X[i] + Bu * Y[i] + Cu >= f(X[i], Y[i], tanh) for i in range(n_samples)),
-#         name="ctr",
-#     )
-#
-#     obj = LinExpr()
-#     obj = Au * np.sum(X) + Bu * np.sum(Y) + Cu * n_samples - np.sum(f(X, Y, tanh))
-#     model.setObjective(obj, GRB.MINIMIZE)
-#
-#     model.optimize()
-#
-#     if model.status == GRB.Status.OPTIMAL:
-#         Au, Bu, Cu = model.getAttr("x", model.getVars())
-#         delta = get_UB_delta(Au, Bu, Cu, lx, ux, ly, uy, tanh)
-#         Cu -= delta
-#         return Au, Bu, Cu
-#     else:
-#         return None, None, None
-
 
 def bounds(lx, ux, ly, uy, gelu=False):
     if gelu == True:
