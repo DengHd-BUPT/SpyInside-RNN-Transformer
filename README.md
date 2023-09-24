@@ -1,6 +1,6 @@
-# Spy Inside：Formal Verification of Trustworthy Transformers and Recurrent Neural Networks for Data Analysis Systems
+# Spy Inside：Formal Verification of Dependable Transformers and Recurrent Neural Networks for Data Analysis Systems
 
-This repository contains the related material of our work: Spy Inside：Formal Verification of Trustworthy Transformers and Recurrent Neural Networks for Data Analysis Systems.
+This repository contains the related material of our work: Spy Inside：Formal Verification of Dependable Transformers and Recurrent Neural Networks for Data Analysis Systems.
 
 ## Preparation
 
