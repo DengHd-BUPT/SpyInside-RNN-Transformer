@@ -1,6 +1,6 @@
-# Spy Inside：Formal Verification of Dependable Transformers and Recurrent Neural Networks for Event Time Series Systems
+# Spy Inside：Formal Verification of Dependable Transformers and Recurrent Neural Networks Against Adversarial Perturbations for Event Time Series Analysis
 
-This repository contains the related material of our work: Spy Inside：Formal Verification of Dependable Transformers and Recurrent Neural Networks for Event Time Series Systems.
+This repository contains the related material of our work: Spy Inside：Formal Verification of Dependable Transformers and Recurrent Neural Networks Against Adversarial Perturbations for Event Time Series Analysis.
 
 ## Preparation
 
